@@ -35,6 +35,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGN-Fv-HNT">
                                 <rect key="frame" x="292" y="577" width="73" height="22"/>
                                 <state key="normal" image="btnCash"/>
+                                <connections>
+                                    <action selector="addCash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hfc-j8-1bG"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bet" translatesAutoresizingMaskIntoConstraints="NO" id="yUM-be-khl">
                                 <rect key="frame" x="172" y="555" width="77" height="59"/>
@@ -90,32 +93,83 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKk-Ad-EzU">
                                         <rect key="frame" x="0.0" y="0.0" width="65" height="73"/>
                                         <state key="normal" image="btnQuit"/>
+                                        <connections>
+                                            <action selector="quit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cl1-5v-cHK"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPJ-Wm-tHg">
                                         <rect key="frame" x="90" y="0.0" width="65" height="73"/>
                                         <state key="normal" image="btnReset"/>
+                                        <connections>
+                                            <action selector="reset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rSZ-uc-XZJ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-Zd-iUb">
                                         <rect key="frame" x="180" y="0.0" width="65" height="73"/>
                                         <state key="normal" image="btnBet"/>
+                                        <connections>
+                                            <action selector="bet:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q9D-5l-QT7"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7R-Mc-IQW">
                                         <rect key="frame" x="270" y="0.0" width="70" height="73"/>
                                         <state key="normal" image="btnSpin"/>
+                                        <connections>
+                                            <action selector="spin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oJS-6d-52s"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Frp-Bc-VO7" userLabel="Picker View1">
+                                <rect key="frame" x="47" y="294" width="104" height="233"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="233" id="JH5-5f-uY0"/>
+                                    <constraint firstAttribute="width" constant="104" id="VNn-xd-be6"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Id9-B0-naM"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="v3y-NA-k2o"/>
+                                </connections>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BOi-9u-sJ6" userLabel="Picker View2">
+                                <rect key="frame" x="154" y="294" width="105" height="233"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="105" id="UrN-lW-ACf"/>
+                                    <constraint firstAttribute="height" constant="233" id="dHD-yj-YgX"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="dqC-BG-WmX"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="O1E-gS-5QX"/>
+                                </connections>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6H-Da-8oX" userLabel="Picker View3">
+                                <rect key="frame" x="262" y="294" width="105" height="233"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="105" id="B2i-Hf-UEy"/>
+                                    <constraint firstAttribute="height" constant="233" id="RhS-AJ-vFO"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="1bP-1o-XBT"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ehm-gk-0Xz"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vjc-Gk-dLr" firstAttribute="leading" secondItem="yUM-be-khl" secondAttribute="trailing" constant="-67" id="08I-Gs-AOB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vgf-jl-fKi" secondAttribute="trailing" constant="55" id="3to-tr-Dog"/>
+                            <constraint firstItem="B6H-Da-8oX" firstAttribute="top" secondItem="FQ1-Mv-1hZ" secondAttribute="bottom" constant="-240" id="4Yj-gm-16a"/>
+                            <constraint firstItem="BOi-9u-sJ6" firstAttribute="leading" secondItem="Frp-Bc-VO7" secondAttribute="trailing" constant="3" id="7yx-gN-XZQ"/>
                             <constraint firstItem="ckQ-xp-KFN" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="867-f7-nnm"/>
                             <constraint firstItem="oCQ-nL-76x" firstAttribute="leading" secondItem="xKA-qD-OZ3" secondAttribute="trailing" constant="-101" id="DSz-TB-yM8"/>
+                            <constraint firstItem="BOi-9u-sJ6" firstAttribute="top" secondItem="FQ1-Mv-1hZ" secondAttribute="bottom" constant="-240" id="EmT-Wk-00d"/>
+                            <constraint firstItem="FQ1-Mv-1hZ" firstAttribute="leading" secondItem="Frp-Bc-VO7" secondAttribute="trailing" constant="-126" id="G90-pk-IAG"/>
                             <constraint firstItem="Vjc-Gk-dLr" firstAttribute="top" secondItem="yUM-be-khl" secondAttribute="bottom" constant="-50" id="IKd-HH-2m8"/>
                             <constraint firstItem="jEb-oB-4X2" firstAttribute="leading" secondItem="vgf-jl-fKi" secondAttribute="trailing" constant="-179" id="KjJ-Su-7zF"/>
                             <constraint firstItem="PRx-o0-5fD" firstAttribute="top" secondItem="yUM-be-khl" secondAttribute="bottom" constant="36" id="MTw-9w-2IA"/>
                             <constraint firstItem="jEb-oB-4X2" firstAttribute="top" secondItem="vgf-jl-fKi" secondAttribute="bottom" constant="-64" id="P48-Xk-SO0"/>
+                            <constraint firstItem="Frp-Bc-VO7" firstAttribute="top" secondItem="FQ1-Mv-1hZ" secondAttribute="bottom" constant="-240" id="PLX-DU-LL8"/>
                             <constraint firstItem="Jvr-oB-FRb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="RDN-Q3-RHl"/>
                             <constraint firstItem="yUM-be-khl" firstAttribute="top" secondItem="FQ1-Mv-1hZ" secondAttribute="bottom" constant="21" id="RRT-5M-Efq"/>
                             <constraint firstItem="xKA-qD-OZ3" firstAttribute="top" secondItem="FQ1-Mv-1hZ" secondAttribute="bottom" constant="21" id="Vfa-2a-17X"/>
@@ -125,6 +179,7 @@
                             <constraint firstItem="FQ1-Mv-1hZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="YNH-sm-bRs"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jvr-oB-FRb" secondAttribute="trailing" constant="45" id="YXq-C8-1aS"/>
                             <constraint firstItem="ckQ-xp-KFN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cH9-xD-LTS"/>
+                            <constraint firstItem="B6H-Da-8oX" firstAttribute="leading" secondItem="BOi-9u-sJ6" secondAttribute="trailing" constant="3" id="cVc-ej-M9z"/>
                             <constraint firstItem="ckQ-xp-KFN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="h2h-1i-AtM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PRx-o0-5fD" secondAttribute="bottom" constant="13" id="i1C-tF-QEp"/>
                             <constraint firstItem="yUM-be-khl" firstAttribute="leading" secondItem="xKA-qD-OZ3" secondAttribute="trailing" constant="21" id="l8m-f6-H1P"/>
@@ -141,6 +196,19 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
+                    <connections>
+                        <outlet property="bet" destination="Vjc-Gk-dLr" id="qDj-Rc-Nzb"/>
+                        <outlet property="btnAddCash" destination="xGN-Fv-HNT" id="ij8-8Z-HLY"/>
+                        <outlet property="btnBet" destination="IYb-Zd-iUb" id="SgU-CE-pUX"/>
+                        <outlet property="btnQuit" destination="TKk-Ad-EzU" id="Wcb-rM-5AY"/>
+                        <outlet property="btnReset" destination="dPJ-Wm-tHg" id="bhH-my-jxC"/>
+                        <outlet property="btnSpin" destination="v7R-Mc-IQW" id="H7n-5E-bxM"/>
+                        <outlet property="jackPot" destination="jEb-oB-4X2" id="3io-az-20T"/>
+                        <outlet property="row1" destination="Frp-Bc-VO7" id="UJL-Va-xIT"/>
+                        <outlet property="row2" destination="BOi-9u-sJ6" id="Lcc-Yp-5W4"/>
+                        <outlet property="row3" destination="B6H-Da-8oX" id="rBN-dp-MxH"/>
+                        <outlet property="wallet" destination="oCQ-nL-76x" id="DbI-dp-Eo9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
