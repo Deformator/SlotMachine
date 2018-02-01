@@ -4,7 +4,8 @@
 //
 //  Created by Andrii Damm on 2018-01-31.
 //  Copyright © 2018 Andrii Damm. All rights reserved.
-//
+//  Commit: creating basic UI
+//  Version: 0.2
 
 import UIKit
 
