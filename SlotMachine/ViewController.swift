@@ -11,7 +11,7 @@ import UIKit
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var images = [UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon")]
+    var images = [UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon"),UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon"),UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon")]
     
     //labels outlets
     @IBOutlet weak var jackPot: UILabel!
@@ -33,6 +33,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        row1.selectRow(4, inComponent:0, animated:true)
+        row2.selectRow(4, inComponent:0, animated:true)
+        row3.selectRow(4, inComponent:0, animated:true)
 
     }
 
@@ -69,7 +72,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return (images[0]?.size.height)!
+        return ((images[0]?.size.height)! + 15)
     }
     
 }
