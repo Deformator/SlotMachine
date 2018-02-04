@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.65
-// Commit: Reel Spin Action Event processing
+// Ver: 0.70
+// Commit: Quit Action handler
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -161,6 +161,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //putting app to the background
     @IBAction func quit(_ sender: UIButton) {
+        //suspending application to background
+        UIControl().sendAction(#selector(NSXPCConnection.suspend),
+                               to: UIApplication.shared, for: nil)
     }
     
     //adding cash to the user wallet
