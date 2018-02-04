@@ -11,7 +11,18 @@ import UIKit
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var images = [UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon"),UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon"),UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Banana"), UIImage(named: "Cherry"), UIImage(named: "jackpot_icon"), UIImage(named: "Grape"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Mango"), UIImage(named: "Mangosteen"), UIImage(named: "Orange"), UIImage(named: "Pear"), UIImage(named: "Strawberry"), UIImage(named: "Watermelon")]
+    var images = [UIImage(named: "Grape"), UIImage(named: "Watermelon"), UIImage(named: "Mango"), UIImage(named: "Strawberry"), UIImage(named: "Kiwi"), UIImage(named: "Lemon"), UIImage(named: "Apple"), UIImage(named: "Pear"), UIImage(named: "Cherry"), UIImage(named: "Orange"), UIImage(named: "Banana"), UIImage(named: "Mangosteen"), UIImage(named: "jackpot_icon")]
+    
+    //fruit faces and odds
+    let faces = [("Grape", 0.08), ("Watermelon", 0.08), ("Mango", 0.08), ("Strawberry", 0.08), ("Kiwi", 0.08), ("Lemon", 0.08), ("Apple", 0.08), ("Pear", 0.08), ("Cherry", 0.08), ("Orange", 0.08), ("Banana", 0.08), ("Mangosteen", 0.08), ("jackpot_icon", 0.04)]
+    
+    //odds for combinations : 3 of the same| 2 of the same| ANY of the 3
+    let odds = [0.1, 0.25, 0.65]
+    
+    //game numbers
+    var startingMoney = 1000 // starting money
+    var jackpot = 100000 // starting jackpot
+    var betM = 0 //bet
     
     //labels outlets
     @IBOutlet weak var jackPot: UILabel!
@@ -36,6 +47,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         row1.selectRow(4, inComponent:0, animated:true)
         row2.selectRow(4, inComponent:0, animated:true)
         row3.selectRow(4, inComponent:0, animated:true)
+        
+        updateUI()
 
     }
 
@@ -49,6 +62,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //reseting user's wallet to starting amount (500$)
     @IBAction func reset(_ sender: UIButton) {
+        startingMoney = 500
+        jackpot = 100000
+        updateUI()
     }
     
     //putting app to the background
@@ -73,6 +89,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return ((images[0]?.size.height)! + 15)
+    }
+    
+ //________ CUTSOM FUNC SEC ______
+    func updateUI() {
+        jackPot.text = String (jackpot)
+        wallet.text = String (startingMoney)
+        betM = 0
+        bet.text = String (betM)
+        btnSpin.isEnabled = false
+        btnBet.isEnabled = startingMoney < 5 ? false : true
     }
     
 }
