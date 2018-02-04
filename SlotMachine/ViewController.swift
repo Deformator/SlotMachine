@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.5
-// Commit: RNG Logic & Intital Logic SetUp
+// Ver: 0.55
+// Commit: Generation of Random Non Repeating Reel Faces
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -144,6 +144,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return -1
     }
     
+    //Generate Non Reapitng Fruit Faces Index from avaliable collection of indexes
+    func getRandomNonRepeatingFruitFaceIndex(indexies: [Int]) -> Int {
+        var randomIndex = -1
+        
+        repeat {
+            randomIndex = getRandomFruitFaceIndex()
+        } while (!indexies.contains(randomIndex))
+        
+        return randomIndex
+    }
     
 }
 
