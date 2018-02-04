@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.55
-// Commit: Generation of Random Non Repeating Reel Faces
+// Ver: 0.6
+// Commit: Betting & Money handling logic
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -63,6 +63,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //increasing basic bet (5$) with step in 5$. Example: 5->10->15...
     @IBAction func bet(_ sender: UIButton) {
+        if (startingMoney >= 5 )  {
+            betM += 5
+            startingMoney -= 5
+            btnSpin.isEnabled = true
+            btnBet.isEnabled = startingMoney < 5 ? false : true
+        }
+        wallet.text = String (startingMoney)
+        bet.text = String (betM)
     }
     
     //reseting user's wallet to starting amount (500$)
@@ -78,6 +86,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //adding cash to the user wallet
     @IBAction func addCash(_ sender: UIButton) {
+        startingMoney += 1000
+        btnBet.isEnabled = true
+        wallet.text = String (startingMoney)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
