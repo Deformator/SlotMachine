@@ -1,11 +1,13 @@
 //
-//  ViewController.swift
-//  SlotMachine
+// Name: Slot Machine
+// Desc: 3 Reel Slot Machine Game
+// Ver: 0.5
+// Commit: RNG Logic & Intital Logic SetUp
+// Contributors:
+//      Viktor Bilyk - # 300964200
+//      Andrii Damm - # 300966307
+//      Tarun Singh - # 300967393
 //
-//  Created by Andrii Damm on 2018-01-31.
-//  Copyright © 2018 Andrii Damm. All rights reserved.
-//  Commit: pickerView setUp
-//  Version: 0.45
 
 import UIKit
 
@@ -18,6 +20,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //odds for combinations : 3 of the same| 2 of the same| ANY of the 3
     let odds = [0.1, 0.25, 0.65]
+    
+    //Maximum Number for RNG bounds, default arc4random is 2^32
+    let maxRandomRange = 4294967296
     
     //game numbers
     var startingMoney = 1000 // starting money
@@ -92,6 +97,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
  //________ CUTSOM FUNC SEC ______
+    //Update UI Labels and Reset Bet
     func updateUI() {
         jackPot.text = String (jackpot)
         wallet.text = String (startingMoney)
@@ -100,6 +106,44 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         btnSpin.isEnabled = false
         btnBet.isEnabled = startingMoney < 5 ? false : true
     }
+    
+    //get RandomNumber
+    func getRandomNumber() -> Int {
+        let randomNumber = arc4random()
+        
+        return Int(randomNumber)
+    }
+    
+    //Randomly select combination for the reel using given odds
+    func randomSelection() -> Int{
+        let randomNumber = getRandomNumber()
+        var cWeight:Double  = 0
+        
+        for (i, odd) in odds.enumerated() {
+            cWeight += odd
+            if ( randomNumber < Int(cWeight * Double(maxRandomRange)) ) {
+                return i
+            }
+        }
+        
+        return -1
+    }
+    
+    //Randomly select fruit face index using given odds
+    func getRandomFruitFaceIndex() -> Int {
+        let randomNumber = getRandomNumber()
+        var cWeight:Double = 0
+        
+        for (i, element) in faces.enumerated() {
+            cWeight += element.1
+            if (randomNumber < Int(cWeight * Double(maxRandomRange))) {
+                return i
+            }
+        }
+        
+        return -1
+    }
+    
     
 }
 
