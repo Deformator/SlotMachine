@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.6
-// Commit: Betting & Money handling logic
+// Ver: 0.65
+// Commit: Reel Spin Action Event processing
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -59,6 +59,85 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     //checking that the bet is not bigger than wallet amount, then spinning the rows
     @IBAction func spin(_ sender: UIButton) {
+        //generate random reel combination out of 3 of the same| 2 of the same| ANY of the 3
+        let selectedCombination = randomSelection()
+        
+        //Fruit Face Indexies for purpose of tracking non repating elements
+        var indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        
+        switch selectedCombination {
+        case 0: // 3 of the same
+            let fruitIndex = getRandomFruitFaceIndex()
+            row1.selectRow(fruitIndex, inComponent: 0, animated: true)
+            row2.selectRow(fruitIndex, inComponent: 0, animated: true)
+            row3.selectRow(fruitIndex, inComponent: 0, animated: true)
+            
+            //check if player won the jackpot
+            if fruitIndex == 12 {
+                startingMoney += jackpot
+                jackpot = 10000
+            }
+            else {
+                startingMoney += betM * 10
+            }
+        case 1: // 2 of the same
+            
+            //generation position where on the reel 2 of the same fruit should go
+            let position = Int(arc4random_uniform(3))
+            var fruitIndex = getRandomFruitFaceIndex()
+            switch position {
+            case 0: //Position: FRUIT FRUIT ANY
+                row1.selectRow(fruitIndex, inComponent: 0, animated: true)
+                row2.selectRow(fruitIndex, inComponent: 0, animated: true)
+                
+                indexes.remove(at: indexes.index(of: fruitIndex)!)
+                
+                fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
+                row3.selectRow(fruitIndex, inComponent: 0, animated: true)
+            case 1: //Position FRUIT ANY FRUIT
+                row1.selectRow(fruitIndex, inComponent: 0, animated: true)
+                row3.selectRow(fruitIndex, inComponent: 0, animated: true)
+                
+                indexes.remove(at: indexes.index(of: fruitIndex)!)
+                
+                fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
+                row2.selectRow(fruitIndex, inComponent: 0, animated: true)
+            case 2: //Position ANY FRUIT FRUIT
+                row2.selectRow(fruitIndex, inComponent: 0, animated: true)
+                row3.selectRow(fruitIndex, inComponent: 0, animated: true)
+                
+                indexes.remove(at: indexes.index(of: fruitIndex)!)
+                
+                fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
+                row1.selectRow(fruitIndex, inComponent: 0, animated: true)
+            default: break
+            }
+            
+            //player's winnings
+            startingMoney += betM
+        case 2: // 3 of Any
+            
+            //reel 1
+            var fruitIndex = getRandomFruitFaceIndex()
+            row1.selectRow(fruitIndex, inComponent: 0, animated: true)
+            indexes.remove(at: indexes.index(of: fruitIndex)!)
+            //reel 2
+            fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
+            row2.selectRow(fruitIndex, inComponent: 0, animated: true)
+            indexes.remove(at: indexes.index(of: fruitIndex)!)
+            //reel 3
+            fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
+            row3.selectRow(fruitIndex, inComponent: 0, animated: true)
+            
+            //Increse jackpot if player loses
+            jackpot += betM * 2
+            
+        default:
+            break
+        }
+        
+        //update UI to reflect current game state
+        updateUI()
     }
     
     //increasing basic bet (5$) with step in 5$. Example: 5->10->15...
