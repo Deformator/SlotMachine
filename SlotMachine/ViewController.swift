@@ -65,13 +65,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Initialize pickerViewMiddle to be used later.
         pickerViewMiddle = ((pickerViewRows / images.count) / 2) * images.count
         
-        // Set the initial values of all pickers to the middle of picker.
-        let initialValue = 0
-//        if let row = rowForValue(value: initialValue) {
+        // Set the initial values of all pickers to the first element of pickers.
             row1.selectRow(0, inComponent: 0, animated: false)
             row2.selectRow(0, inComponent: 0, animated: false)
             row3.selectRow(0, inComponent: 0, animated: false)
-//        }
         
         updateUI()
     }
@@ -243,11 +240,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // the rows repeat every `pickerViewData.count` items
         return images[row % images.count]
     }
-    
-//    // Returns the row number for a value from the middle of picker.
-//    func rowForValue(value: Int) -> Int? {
-//        return pickerViewMiddle + value
-//    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
        return 1
