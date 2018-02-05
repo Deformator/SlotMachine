@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		25B9C4A420282DAF0000B492 /* jackpotSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C4A320282DAF0000B492 /* jackpotSound.mp3 */; };
-		25B9C4A6202843CF0000B492 /* jackpotImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25B9C4A5202843CF0000B492 /* jackpotImage.jpg */; };
 		25B9C4A9202845BC0000B492 /* JackpotAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C4A8202845BC0000B492 /* JackpotAlertViewController.swift */; };
 		25B9C4AD202864820000B492 /* GameRulesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B9C4AC202864820000B492 /* GameRulesController.swift */; };
+		77FE5FEF2028DB6700999BF9 /* jackpotImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 77FE5FEE2028DB6600999BF9 /* jackpotImage.png */; };
 		F87FD5AC2022535F005982D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87FD5AB2022535F005982D8 /* AppDelegate.swift */; };
 		F87FD5AE2022535F005982D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87FD5AD2022535F005982D8 /* ViewController.swift */; };
 		F87FD5B12022535F005982D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F87FD5AF2022535F005982D8 /* Main.storyboard */; };
@@ -20,9 +20,9 @@
 
 /* Begin PBXFileReference section */
 		25B9C4A320282DAF0000B492 /* jackpotSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jackpotSound.mp3; sourceTree = "<group>"; };
-		25B9C4A5202843CF0000B492 /* jackpotImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jackpotImage.jpg; sourceTree = "<group>"; };
 		25B9C4A8202845BC0000B492 /* JackpotAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackpotAlertViewController.swift; sourceTree = "<group>"; };
 		25B9C4AC202864820000B492 /* GameRulesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRulesController.swift; sourceTree = "<group>"; };
+		77FE5FEE2028DB6600999BF9 /* jackpotImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jackpotImage.png; sourceTree = "<group>"; };
 		F87FD5A82022535F005982D8 /* SlotMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlotMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87FD5AB2022535F005982D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F87FD5AD2022535F005982D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,9 +66,9 @@
 				F87FD5AD2022535F005982D8 /* ViewController.swift */,
 				F87FD5AF2022535F005982D8 /* Main.storyboard */,
 				25B9C4A8202845BC0000B492 /* JackpotAlertViewController.swift */,
-				25B9C4A5202843CF0000B492 /* jackpotImage.jpg */,
 				F87FD5B22022535F005982D8 /* Assets.xcassets */,
 				25B9C4A320282DAF0000B492 /* jackpotSound.mp3 */,
+				77FE5FEE2028DB6600999BF9 /* jackpotImage.png */,
 				F87FD5B42022535F005982D8 /* LaunchScreen.storyboard */,
 				F87FD5B72022535F005982D8 /* Info.plist */,
 				25B9C4AC202864820000B492 /* GameRulesController.swift */,
@@ -139,7 +139,7 @@
 				F87FD5B32022535F005982D8 /* Assets.xcassets in Resources */,
 				F87FD5B12022535F005982D8 /* Main.storyboard in Resources */,
 				25B9C4A420282DAF0000B492 /* jackpotSound.mp3 in Resources */,
-				25B9C4A6202843CF0000B492 /* jackpotImage.jpg in Resources */,
+				77FE5FEF2028DB6700999BF9 /* jackpotImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
