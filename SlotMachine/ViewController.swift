@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.8
-// Commit: Added custom sounds for spin button click, element selection and jackpot win.
+// Ver: 0.85
+// Commit: Adding missing constraints, minor fixes and tidy up
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -35,7 +35,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     private let timeIntervalBetweenSpinnings = 0.25
     
     //game numbers
-    var startingMoney = 1000 // starting money
+    var startingMoney = 500 // starting money
     var jackpot = 100000 // starting jackpot
     var betM = 0 //bet
     
@@ -125,25 +125,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
                 spinThirdPicker(fruitIndex: fruitIndex)
             case 1: //Position FRUIT ANY FRUIT
-                spinFirstPicker(fruitIndex: fruitIndex)
-
-                spinThirdPicker(fruitIndex: fruitIndex)
+                
+                let tempIndex = fruitIndex //remeber 2 of the same fruitIndex for more fluid animation purposes
                 
                 indexes.remove(at: indexes.index(of: fruitIndex)!)
                 
                 fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
-
+                
+                spinFirstPicker(fruitIndex: tempIndex)
+                
                 spinSecondPicker(fruitIndex: fruitIndex)
+            
+                spinThirdPicker(fruitIndex: tempIndex)
             case 2: //Position ANY FRUIT FRUIT
-                spinSecondPicker(fruitIndex: fruitIndex)
-
-                spinThirdPicker(fruitIndex: fruitIndex)
-                
+                let tempIndex = fruitIndex //remeber 2 of the same fruitIndex for more fluid animation purposes
+            
                 indexes.remove(at: indexes.index(of: fruitIndex)!)
                 
                 fruitIndex = getRandomNonRepeatingFruitFaceIndex(indexies: indexes)
 
                 spinFirstPicker(fruitIndex: fruitIndex)
+                
+                spinSecondPicker(fruitIndex: tempIndex)
+                
+                spinThirdPicker(fruitIndex: tempIndex)
             default: break
             }
             
@@ -240,7 +245,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let jackpotAlert = self.storyboard?.instantiateViewController(withIdentifier: "JackpotAlertID") as! JackpotAlertViewController
         jackpotAlert.providesPresentationContextTransitionStyle = true
         jackpotAlert.definesPresentationContext = true
-        jackpotAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        jackpotAlert.modalPresentationStyle = UIModalPresentationStyle.popover
         jackpotAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(jackpotAlert, animated: true, completion: nil)
     }
@@ -287,7 +292,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //adding cash to the user wallet
     @IBAction func addCash(_ sender: UIButton) {
-        startingMoney += 1000
+        startingMoney += 100
         btnBet.isEnabled = true
         wallet.text = String (startingMoney)
     }
@@ -297,7 +302,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let infoAlert = self.storyboard?.instantiateViewController(withIdentifier: "GameRulesAlertID") as! GameRulesController
         infoAlert.providesPresentationContextTransitionStyle = true
         infoAlert.definesPresentationContext = true
-        infoAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        infoAlert.modalPresentationStyle = UIModalPresentationStyle.popover
         infoAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         self.present(infoAlert, animated: true, completion: nil)
     }
