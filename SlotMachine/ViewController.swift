@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.85
-// Commit: Adding missing constraints, minor fixes and tidy up
+// Ver: 0.9
+// Commit: Added success sounds, update to user interaction hadnling and UI updates
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -79,8 +79,35 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Play a sound when spin button is pressed.
         AudioServicesPlaySystemSound(1100)
         
+        //selctor for sucess sound on reel completion
+        var selectSound = -1
+        
+        //disable user interaction until animations is finished and UI is updated
+        btnSpin.isEnabled = false
+        btnBet.isEnabled = false
+        btnReset.isEnabled = false
+        btnAddCash.isEnabled = false
+        
+        //wait for animations to finish to update UI and play success sound
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                //play selcted success sound
+                switch selectSound {
+                    case 0: AudioServicesPlaySystemSound(1036)
+                    case 1: AudioServicesPlaySystemSound(1026)
+                    case 2: break
+                    default: break
+                }
+                // update UI to reflect game state change
+                self.updateUI()
+                //turn back user interactions
+                self.btnReset.isEnabled = true
+                self.btnAddCash.isEnabled = true
+        })
+        
         //generate random reel combination out of 3 of the same| 2 of the same| ANY of the 3
         let selectedCombination = randomSelection()
+        //success sound for generated reel combination
+        selectSound = selectedCombination
         
         //Fruit Face Indexies for purpose of tracking non repating elements
         var indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -96,6 +123,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             if isJackpotCombination {
                 spinThirdPicker(fruitIndex: fruitIndex, isJackpotCombination: true)
+                //ignore success sound, jackpot has own sound event
+                selectSound = -1
             } else {
                 spinThirdPicker(fruitIndex: fruitIndex)
             }
@@ -174,9 +203,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         default:
             break
         }
-        
-        //update UI to reflect current game state
-        updateUI()
     }
     
     // Position the picker to a particular row after a short delay.
