@@ -185,7 +185,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 // If the player won jackpot, then play the jackpot won alert sound.
                 if isJackpotCombination {
-                    self.playJackpotWonAlertSound()
+                    self.displayJackpotWonAlertWithSound()
                 }
             } else {
                 picker.selectRow(row, inComponent: 0, animated: true)
@@ -230,6 +230,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // Start the process of spinning the third spinner for a particular duration and finally coming to rest at the generated position while taking in the isJackpotCombination parameter.
     func spinThirdPicker(fruitIndex: Int, isJackpotCombination: Bool) {
         spinPickerWithCustomAnimation(picker: row3, generatedIndex: fruitIndex, spinningDuration: thirdPickerSpinningDuration, isJackpotCombination: isJackpotCombination)
+    }
+    
+    // Display the jackpot won alert with sound when a player wins the Jackpot.
+    func displayJackpotWonAlertWithSound() {
+        playJackpotWonAlertSound()
+        
+        // Display custom alert view.
+        let jackpotAlert = self.storyboard?.instantiateViewController(withIdentifier: "JackpotAlertID") as! JackpotAlertView
+        jackpotAlert.providesPresentationContextTransitionStyle = true
+        jackpotAlert.definesPresentationContext = true
+        jackpotAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        jackpotAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(jackpotAlert, animated: true, completion: nil)
     }
     
     // Play the jackpot alert sound when a player wins the Jackpot.
