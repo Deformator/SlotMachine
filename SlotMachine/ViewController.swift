@@ -53,13 +53,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var btnReset: UIButton!
     @IBOutlet weak var btnQuit: UIButton!
     @IBOutlet weak var btnAddCash: UIButton!
+    @IBOutlet weak var infoButton: UIButton!
     
     //pickers outlets
     @IBOutlet weak var row1: UIPickerView!
     @IBOutlet weak var row2: UIPickerView!
     @IBOutlet weak var row3: UIPickerView!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -237,7 +237,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         playJackpotWonAlertSound()
         
         // Display custom alert view.
-        let jackpotAlert = self.storyboard?.instantiateViewController(withIdentifier: "JackpotAlertID") as! JackpotAlertView
+        let jackpotAlert = self.storyboard?.instantiateViewController(withIdentifier: "JackpotAlertID") as! JackpotAlertViewController
         jackpotAlert.providesPresentationContextTransitionStyle = true
         jackpotAlert.definesPresentationContext = true
         jackpotAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
@@ -290,6 +290,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         startingMoney += 1000
         btnBet.isEnabled = true
         wallet.text = String (startingMoney)
+    }
+    
+    @IBAction func onInfoButtonClicked(_ sender: UIButton) {
+        // Display the custom game rules info view.
+        let infoAlert = self.storyboard?.instantiateViewController(withIdentifier: "GameRulesAlertID") as! GameRulesController
+        infoAlert.providesPresentationContextTransitionStyle = true
+        infoAlert.definesPresentationContext = true
+        infoAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        infoAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(infoAlert, animated: true, completion: nil)
     }
     
     // Return the value (image) corresponding to a row number.

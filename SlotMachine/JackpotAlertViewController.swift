@@ -12,7 +12,7 @@
 
 import UIKit
 
-class JackpotAlertView: UIViewController {
+class JackpotAlertViewController: UIViewController {
 
     @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var continueButton: UIButton!
