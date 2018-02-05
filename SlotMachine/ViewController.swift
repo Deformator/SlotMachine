@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.75
-// Commit: Added custom spinning animations to the pickerviews of slot machine.
+// Ver: 0.8
+// Commit: Added custom sounds for spin button click, element selection and jackpot win.
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -10,6 +10,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -75,6 +76,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     //checking that the bet is not bigger than wallet amount, then spinning the rows
     @IBAction func spin(_ sender: UIButton) {
+        // Play a sound when spin button is pressed.
+        AudioServicesPlaySystemSound(1100)
+        
         //generate random reel combination out of 3 of the same| 2 of the same| ANY of the 3
         let selectedCombination = randomSelection()
         
@@ -84,15 +88,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         switch selectedCombination {
         case 0: // 3 of the same
             let fruitIndex = getRandomFruitFaceIndex()
+            let isJackpotCombination = (fruitIndex == 12)
             
             spinFirstPicker(fruitIndex: fruitIndex)
 
             spinSecondPicker(fruitIndex: fruitIndex)
 
-            spinThirdPicker(fruitIndex: fruitIndex)
+            if isJackpotCombination {
+                spinThirdPicker(fruitIndex: fruitIndex, isJackpotCombination: true)
+            } else {
+                spinThirdPicker(fruitIndex: fruitIndex)
+            }
             
             //check if player won the jackpot
-            if fruitIndex == 12 {
+            if isJackpotCombination {
                 startingMoney += jackpot
                 jackpot = 10000
             }
@@ -166,25 +175,41 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     // Position the picker to a particular row after a short delay.
-    func positionPickerToSelectedRow(row: Int, timeInterval: Double, picker: UIPickerView) {
+    func positionPickerToSelectedRow(row: Int, timeInterval: Double, picker: UIPickerView, isFinalRowSelection: Bool, isJackpotCombination: Bool) {
         let when = DispatchTime.now() + timeInterval
         DispatchQueue.main.asyncAfter(deadline: when) {
-            picker.selectRow(row, inComponent: 0, animated: true)
+            // If this is the final row selection, select it without animation and play a sound. Otherwise don't play any sound and keep selecting rows with animation.
+            if isFinalRowSelection {
+                picker.selectRow(row, inComponent: 0, animated: false)
+                AudioServicesPlaySystemSound(1054)
+                
+                // If the player won jackpot, then play the jackpot won alert sound.
+                if isJackpotCombination {
+                    self.playJackpotWonAlertSound()
+                }
+            } else {
+                picker.selectRow(row, inComponent: 0, animated: true)
+            }
         }
     }
     
-    // Spin the picker for a particular duation passed in as parameters.
+    // Spin the picker for a particular duration passed in as parameters.
     func spinPickerWithCustomAnimation(picker: UIPickerView, generatedIndex: Int, spinningDuration: Int) {
+        spinPickerWithCustomAnimation(picker: picker, generatedIndex: generatedIndex, spinningDuration: spinningDuration, isJackpotCombination: false)
+    }
+    
+    // Spin the picker for a particular duration passed in as parameters while taking in the isJackpotCombination parameter.
+    func spinPickerWithCustomAnimation(picker: UIPickerView, generatedIndex: Int, spinningDuration: Int, isJackpotCombination: Bool) {
         var row = 0
         var timeDelayBeforeSpinning = 0.0
         // Spin the current pickerview repeatedly for a few times as per the duration defined for the current pickerview before finally making it come to rest with the value at the generated index.
         while row < spinningDuration {
             row = row + 10;
-            positionPickerToSelectedRow(row: row, timeInterval: timeDelayBeforeSpinning, picker: picker)
+            positionPickerToSelectedRow(row: row, timeInterval: timeDelayBeforeSpinning, picker: picker, isFinalRowSelection: false, isJackpotCombination: false)
             timeDelayBeforeSpinning = timeDelayBeforeSpinning + timeIntervalBetweenSpinnings
         }
         // Position the pickerview to the generated value for the current picker.
-        positionPickerToSelectedRow(row: generatedIndex, timeInterval: timeDelayBeforeSpinning, picker: picker)
+        positionPickerToSelectedRow(row: generatedIndex, timeInterval: timeDelayBeforeSpinning, picker: picker, isFinalRowSelection: true, isJackpotCombination: isJackpotCombination)
     }
     
     // Start the process of spinning the first spinner for a particular duration and finally coming to rest at the generated position.
@@ -199,7 +224,26 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Start the process of spinning the third spinner for a particular duration and finally coming to rest at the generated position.
     func spinThirdPicker(fruitIndex: Int) {
-        spinPickerWithCustomAnimation(picker: row3, generatedIndex: fruitIndex, spinningDuration: thirdPickerSpinningDuration)
+        spinThirdPicker(fruitIndex: fruitIndex, isJackpotCombination: false)
+    }
+    
+    // Start the process of spinning the third spinner for a particular duration and finally coming to rest at the generated position while taking in the isJackpotCombination parameter.
+    func spinThirdPicker(fruitIndex: Int, isJackpotCombination: Bool) {
+        spinPickerWithCustomAnimation(picker: row3, generatedIndex: fruitIndex, spinningDuration: thirdPickerSpinningDuration, isJackpotCombination: isJackpotCombination)
+    }
+    
+    // Play the jackpot alert sound when a player wins the Jackpot.
+    func playJackpotWonAlertSound() {
+        if let jackpotSoundUrl = Bundle.main.url(forResource: "jackpotSound", withExtension: "mp3") {
+            var jackpotSoundId: SystemSoundID = 0
+            AudioServicesCreateSystemSoundID(jackpotSoundUrl as CFURL, &jackpotSoundId)
+            
+            AudioServicesAddSystemSoundCompletion(jackpotSoundId, nil, nil, { (customSoundId, _) -> Void in
+                AudioServicesDisposeSystemSoundID(customSoundId)
+            }, nil)
+            
+            AudioServicesPlaySystemSound(jackpotSoundId)
+        }
     }
     
     //increasing basic bet (5$) with step in 5$. Example: 5->10->15...
