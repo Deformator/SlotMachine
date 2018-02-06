@@ -1,8 +1,8 @@
 //
 // Name: Slot Machine
 // Desc: 3 Reel Slot Machine Game
-// Ver: 0.9
-// Commit: Added success sounds, update to user interaction hadnling and UI updates
+// Ver: 1.0
+// Commit: Deleting touching interaction with the rows and adjust jackpot formula
 // Contributors:
 //      Viktor Bilyk - # 300964200
 //      Andrii Damm - # 300966307
@@ -198,7 +198,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             spinThirdPicker(fruitIndex: fruitIndex)
             
             //Increse jackpot if player loses
-            jackpot += betM * 2
+            jackpot += Int (Double(betM) * 0.2)
             
         default:
             break
